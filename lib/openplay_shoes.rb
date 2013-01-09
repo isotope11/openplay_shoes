@@ -5,27 +5,29 @@ Bundler.require :default, :test
 
 require_relative 'playa'
 
+module OpenplayDrawing
+  def draw_hosts
+    hosts = ::Openplay::Client.new.list.map(&:hosttxt)
+    hosts.each do |host|
+      button host do
+        Playa.play(host)
+      end
+    end
+  end
+end
+
 Shoes.app do
+  extend OpenplayDrawing
+
   title "OpenPlay"
 
   flow do
     flow(width: 0.5) do
-      draw_hosts = proc do
-        hosts = ::Openplay::Client.new.list.map(&:hosttxt)
-        hosts.each do |host|
-          button host do
-            Playa.play(host)
-          end
-        end
-      end
-
       para 'Pick a screen to throw up on...'
-      @hostlist = flow {
-        draw_hosts.call
-      }
+      @hostlist = flow { draw_hosts }
       button "Refresh" do
         @hostlist.clear do
-          draw_hosts.call
+          draw_hosts
         end
       end
     end
