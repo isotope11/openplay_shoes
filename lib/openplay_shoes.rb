@@ -6,17 +6,35 @@ Bundler.require :default, :test
 require_relative 'playa'
 
 Shoes.app do
-  hosts = ::Openplay::Client.new.list.map(&:hosttxt)
-  para 'Welcome to OpenPlay.  Pick a screen to throw up on.'
-  hosts.each do |host|
-    flow do
-      button host do
-        Playa.play(host)
+  title "OpenPlay"
+
+  flow do
+    stack do
+      draw_hosts = proc do
+        hosts = ::Openplay::Client.new.list.map(&:hosttxt)
+        hosts.each do |host|
+          button host do
+            Playa.play(host)
+          end
+        end
+      end
+
+      para 'Pick a screen to throw up on...'
+      @hostlist = flow {
+        draw_hosts.call
+      }
+      button "Refresh" do
+        @hostlist.clear do
+          draw_hosts.call
+        end
       end
     end
-  end
-  para "...or say you'll receive some video..."
-  button "Receive" do
-    Playa.front
+
+    stack do
+      para "...or say you'll receive some video..."
+      button "Receive" do
+        Playa.front
+      end
+    end
   end
 end
