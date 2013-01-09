@@ -1,7 +1,7 @@
 PATH
   remote: /home/jadams/ruby/openplay
   specs:
-    openplay (0.0.1)
+    openplay (0.0.2)
       dnssd (~> 2.0)
       findme
       thor

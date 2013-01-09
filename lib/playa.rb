@@ -3,8 +3,8 @@ class Playa
   def initialize
   end
 
-  def self.play(host)
-    new.async.play(host)
+  def self.play(hostname)
+    new.async.play(hostname)
   end
 
   def self.front
