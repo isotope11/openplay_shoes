@@ -11,8 +11,8 @@ class Playa
     new.async.front
   end
 
-  def play(host)
-    client = ::Openplay::Client.new(host)
+  def play(hostname)
+    client = ::Openplay::Client.new(hostname: hostname)
     client.throw
   end
 
