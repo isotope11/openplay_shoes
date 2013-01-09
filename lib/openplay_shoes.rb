@@ -9,7 +9,7 @@ Shoes.app do
   title "OpenPlay"
 
   flow do
-    stack do
+    flow(width: 0.5) do
       draw_hosts = proc do
         hosts = ::Openplay::Client.new.list.map(&:hosttxt)
         hosts.each do |host|
@@ -30,7 +30,7 @@ Shoes.app do
       end
     end
 
-    stack do
+    flow(width: 0.5) do
       para "...or say you'll receive some video..."
       button "Receive" do
         Playa.front
